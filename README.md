@@ -52,3 +52,7 @@ Este repositório contém a camada **backend** da aplicação, responsável pela
 |:------:|:----------|:------------|
 | `GET` | `/api/reports/monthly` | Generate monthly financial report. |
 | `GET` | `/api/reports/export/csv` | Export transactions as CSV. |
+
+<img width="1536" height="1024" alt="ChatGPT Image 11_06_2026, 11_07_28" src="https://github.com/user-attachments/assets/36d2c707-5a1c-4d1d-bc93-6aa9bcfc37f2" />
+
+<img width="1536" height="1024" alt="ChatGPT Image 11_06_2026, 10_59_35" src="https://github.com/user-attachments/assets/bc7ec7c9-623f-471e-96b8-de7c683d3f4c" />
