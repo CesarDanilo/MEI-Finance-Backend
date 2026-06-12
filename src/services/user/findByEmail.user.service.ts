@@ -5,6 +5,7 @@ export class FindUserByEmailService {
 
     async execute(id: string) {
         const user = await this.userRepository.findByEmail(id);
+        if(!user) throw new Error('User not found');
         return user;
     }
 }

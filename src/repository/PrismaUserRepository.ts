@@ -1,4 +1,3 @@
-import { User } from "@prisma/client";
 import { prisma } from "../config/prisma";
 import { IUserRepository, CreateUserDTO } from "../interfaces/IUserRepository";
 

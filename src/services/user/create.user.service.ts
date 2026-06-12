@@ -7,7 +7,7 @@ export class CreateUserService {
     async execute(data: CreateUserDTO) {
 
         const userAlreadyExists = await this.userRepository.findByEmail(data.email);
-        if (!userAlreadyExists) throw new Error('Email already in use');
+        if (userAlreadyExists) throw new Error('Email already in use');
 
         data.passwordHash = await hash(data.passwordHash, 10);
 
