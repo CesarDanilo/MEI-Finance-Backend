@@ -15,7 +15,7 @@ export class UserController {
 
             if (!result.success) {
                 return res.status(400).json({
-                    message: "Dados inválidos", 
+                    message: "Dados inválidos",
                     error: result.error.message
                 })
             }

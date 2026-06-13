@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { InMemoryUserRepository } from "../../repository/inMemory/InMemoryUserRepository"
-import { FindUserByIdService } from '../../services/user/findByid.user.service'
-import { CreateUserService } from '../../services/user/create.user.service'
+import { InMemoryUserRepository } from "../../../repository/inMemory/InMemoryUserRepository"
+import { FindUserByIdService } from '../../../services/user/findByid.user.service'
+import { CreateUserService } from '../../../services/user/create.user.service'
 
 let userRepository: InMemoryUserRepository
 let findUserByIdService: FindUserByIdService

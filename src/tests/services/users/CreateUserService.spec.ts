@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { InMemoryUserRepository } from '../../repository/inMemory/InMemoryUserRepository'
-import { CreateUserService } from '../../services/user/create.user.service'
+import { InMemoryUserRepository } from '../../../repository/inMemory/InMemoryUserRepository'
+import { CreateUserService } from '../../../services/user/create.user.service'
 
 let userRepository: InMemoryUserRepository
 let createUserService: CreateUserService
