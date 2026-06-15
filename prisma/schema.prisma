@@ -12,72 +12,51 @@ enum TransactionType {
   EXPENSE
 }
 
-enum CategoryType {
-  INCOME
-  EXPENSE
-}
-
 model User {
-  id            String         @id @default(uuid())
-  name          String
-  email         String         @unique
-  passwordHash  String
+  id           String @id @default(uuid())
+  name         String
+  email        String @unique
+  passwordHash String
 
-  transactions  Transaction[]
-  categories    Category[]
-  refreshTokens RefreshToken[]
+  transactions Transaction[]
+  categories   Category[]
 
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("users")
 }
 
 model Category {
-  id        String         @id @default(uuid())
-  name      String
-  type      CategoryType
-  color     String?
-  icon      String?
+  id    String          @id @default(uuid())
+  name  String
+  type  TransactionType
 
-  userId    String
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   transactions Transaction[]
 
-  createdAt DateTime       @default(now())
+  createdAt DateTime @default(now())
 
   @@map("categories")
 }
 
 model Transaction {
-  id              String           @id @default(uuid())
+  id              String          @id @default(uuid())
   type            TransactionType
-  amount          Decimal          @db.Decimal(10, 2)
+  amount          Decimal         @db.Decimal(10, 2)
   description     String?
-  transactionDate DateTime
+  transactionDate DateTime        @db.Date
 
-  userId          String
-  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  categoryId      String
-  category        Category         @relation(fields: [categoryId], references: [id])
-
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-
-  @@map("transactions")
-}
-
-model RefreshToken {
-  id        String   @id @default(uuid())
-  token     String   @unique
-  expiresAt DateTime
-
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@map("refresh_tokens")
+  @@map("transactions")
 }
