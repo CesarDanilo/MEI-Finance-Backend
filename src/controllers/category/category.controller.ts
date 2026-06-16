@@ -36,4 +36,16 @@ export class CategoryController {
         }
     }
 
+    async delete(req: Request, res: Response) {
+        try {
+            const id = req.params.id as string;
+
+            const categories = await deleteCategoryService.execute(id);
+
+            return res.status(200).json({ data: categories });
+            
+        } catch (error: any) {
+            return res.status(500).json({ error: error.message, message: "Erro interno" })
+        }
+    }
 }
