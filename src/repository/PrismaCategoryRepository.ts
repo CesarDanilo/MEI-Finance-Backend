@@ -5,7 +5,13 @@ import { ICategoryRepository, ICreateCategoryDTO, IUpdateCategory } from "../int
 
 export class PrismaCategoryRepository implements ICategoryRepository {
     async create(data: ICreateCategoryDTO) {
-        return prisma.category.create({ data })
+        return prisma.category.create({
+            data: {
+                name: data.name,
+                type: data.type,
+                userId: data.userId,
+            }
+        })
     }
 
     async findById(id: string) {

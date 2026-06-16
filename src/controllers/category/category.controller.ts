@@ -16,7 +16,7 @@ const deleteCategoryService = new DeleteCategoryService(categoryRepository);
 export class CategoryController {
     async create(req: Request, res: Response) {
         try {
-            const category = await categoryService.execute(req.body);
+            const category = await categoryService.execute({ ...req.body, userId: req.user.id })
             return res.status(201).json({ data: category, message: "Categoria criada com sucesso!" })
         } catch (error: any) {
             return res.status(500).json({ error: error.message, message: "Erro interno" })
