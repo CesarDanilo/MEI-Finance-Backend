@@ -23,5 +23,17 @@ export class CategoryController {
         }
     }
 
+    async readAll(req: Request, res: Response) {
+        try {
+            const userId = req.user.id
+
+            const categories = await readCategoryService.execute(userId)
+
+            return res.status(200).json({ data: categories })
+
+        } catch (error: any) {
+            return res.status(500).json({ error: error.message, message: "Erro interno" })
+        }
+    }
 
 }

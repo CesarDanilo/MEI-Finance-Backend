@@ -5,6 +5,6 @@ import { authMiddleware } from "../middleware/authUser";
 const router = Router();
 const userController = new UserController();
 
-router.post("/user", authMiddleware, userController.Create)
+router.post("/user", userController.Create)
 
 export default router;
