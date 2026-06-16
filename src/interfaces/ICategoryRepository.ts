@@ -8,5 +8,6 @@ export interface ICreateCategoryDTO {
 
 export interface ICategoryRepository {
   create(data: ICreateCategoryDTO): Promise<Category>
-  findById(id: string): Promise<Category>
+  findById(id: string): Promise<Category | null>
+  findByNameAndUserId(name: string, userId: string): Promise<Category | null>
 }
