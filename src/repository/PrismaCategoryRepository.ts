@@ -1,4 +1,3 @@
-import { Category } from "@prisma/client";
 import { prisma } from "../config/prisma";
 import { ICategoryRepository, ICreateCategoryDTO, IUpdateCategory } from "../interfaces/ICategoryRepository";
 
