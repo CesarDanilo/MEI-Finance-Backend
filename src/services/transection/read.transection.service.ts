@@ -1,9 +1,9 @@
 import { ITransactionRepository } from "../../interfaces/ITransectionRepository"
 
 export class ReadTransectionService {
-    constructor(private categoryRepository: ITransactionRepository) { }
+    constructor(private transectionRepository: ITransactionRepository) { }
 
     async execute(userId: string) {
-        return this.categoryRepository.findAll(userId);
+        return this.transectionRepository.findAll(userId);
     }
 }

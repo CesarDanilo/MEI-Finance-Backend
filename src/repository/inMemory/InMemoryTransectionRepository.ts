@@ -37,18 +37,30 @@ export class InMemoryTransactionRepository implements ITransactionRepository {
 
     async update(id: string, data: IUpdateTransactionDTO): Promise<Transaction> {
         const index = this.items.findIndex((item) => item.id === id);
+
+        if (index === -1) {
+            throw new Error("Transaction not found"); // <-- estava faltando
+        }
+
         this.items[index] = {
             ...this.items[index],
             ...data,
             amount: new Decimal(data.amount),
+            description: data.description ?? null, // <-- garante null quando omitido
         };
+
         return this.items[index];
     }
 
     async delete(id: string): Promise<Transaction> {
         const index = this.items.findIndex((item) => item.id === id);
+
+        if (index === -1) {
+            throw new Error("Transaction not found"); // <-- estava faltando
+        }
+
         const transaction = this.items[index];
         this.items.splice(index, 1);
         return transaction;
-    }
+    }q
 }
