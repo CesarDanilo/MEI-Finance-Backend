@@ -16,7 +16,11 @@ model User {
   id           String @id @default(uuid())
   name         String
   email        String @unique
-  passwordHash String
+  passwordHash String?
+
+  googleId  String?  @unique
+
+  avatarUrl String?
 
   transactions  Transaction[]
   categories    Category[]
