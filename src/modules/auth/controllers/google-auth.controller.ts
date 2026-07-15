@@ -11,7 +11,7 @@ export function redirectToGoogle(req: Request, res: Response) {
 // google-auth.controller.ts
 export async function googleCallback(req: Request, res: Response) {
   const code = req.query.code as string
-
+  console.log('[googleCallback] FRONTEND_URL =', process.env.FRONTEND_URL)
   if (!code) {
     return res.status(400).json({ message: 'Código de autorização ausente' })
   }
