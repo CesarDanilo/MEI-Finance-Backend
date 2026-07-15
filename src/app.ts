@@ -39,7 +39,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(apiRateLimiter);
 
-app.use("/api", healthRouter);
+//app.use("/api", healthRouter);
 app.use("/api", authRouter);
 app.use("/api", userRouter);
 app.use("/api", categoryRouter);
