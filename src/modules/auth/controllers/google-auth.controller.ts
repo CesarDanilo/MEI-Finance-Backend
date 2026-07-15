@@ -1,6 +1,5 @@
-// src/modules/auth/controllers/google-auth.controller.ts
 import { Request, Response } from 'express'
-import { getGoogleAuthUrl } from '../infra/google-oauth.client'
+import { getGoogleAuthUrl, getGoogleUserFromCode } from '../infra/google-oauth.client'
 import { AuthenticateWithGoogleUseCase } from '../use-cases/authenticate-with-google.use-case'
 import { UserRepository } from '../../user/user.repository'
 
@@ -17,15 +16,17 @@ export async function googleCallback(req: Request, res: Response) {
   }
 
   try {
+    // Passo que faltava: trocar o code pelo payload do usuário do Google
+    // antes de passar pro use case (ele espera GoogleUserPayload, não a code)
+    const googleUser = await getGoogleUserFromCode(code)
+
     const useCase = new AuthenticateWithGoogleUseCase(new UserRepository())
-    const { user, token } = await useCase.execute(code)
+    const { user, token } = await useCase.execute(googleUser)
 
-    // opção A: redireciona pro front com o token na URL/cookie
     res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`)
-
-    // opção B: retorna JSON direto (se for API pura)
-    // res.json({ user, token })
   } catch (error) {
+    // Log real do erro — essencial pra debugar OAuth, o 401 genérico escondia a causa
+    console.error('[googleCallback] falha na autenticação com Google:', error)
     res.status(401).json({ message: 'Falha na autenticação com Google' })
   }
 }
