@@ -8,6 +8,7 @@ export function redirectToGoogle(req: Request, res: Response) {
   res.redirect(url)
 }
 
+// google-auth.controller.ts
 export async function googleCallback(req: Request, res: Response) {
   const code = req.query.code as string
 
@@ -15,17 +16,19 @@ export async function googleCallback(req: Request, res: Response) {
     return res.status(400).json({ message: 'Código de autorização ausente' })
   }
 
-  try {
-    // Passo que faltava: trocar o code pelo payload do usuário do Google
-    // antes de passar pro use case (ele espera GoogleUserPayload, não a code)
-    const googleUser = await getGoogleUserFromCode(code)
+  const frontendUrl = process.env.FRONTEND_URL
+  if (!frontendUrl) {
+    console.error('[googleCallback] FRONTEND_URL não configurada no ambiente')
+    return res.status(500).json({ message: 'Configuração do servidor incompleta' })
+  }
 
+  try {
+    const googleUser = await getGoogleUserFromCode(code)
     const useCase = new AuthenticateWithGoogleUseCase(new UserRepository())
     const { user, token } = await useCase.execute(googleUser)
 
-    res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`)
+    res.redirect(`${frontendUrl}/auth/callback?token=${token}`)
   } catch (error) {
-    // Log real do erro — essencial pra debugar OAuth, o 401 genérico escondia a causa
     console.error('[googleCallback] falha na autenticação com Google:', error)
     res.status(401).json({ message: 'Falha na autenticação com Google' })
   }
