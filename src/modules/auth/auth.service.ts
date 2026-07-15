@@ -26,12 +26,20 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedError("Credenciais inválidas");
     }
-
+  
+    // Usuários criados via Google OAuth não possuem senha (passwordHash null).
+    // Trata isso antes do compare pra satisfazer o TS e dar uma mensagem clara.
+    if (!user.passwordHash) {
+      throw new UnauthorizedError(
+        "Este usuário não possui senha cadastrada. Faça login com Google."
+      );
+    }
+  
     const passwordMatch = await compare(input.password, user.passwordHash);
     if (!passwordMatch) {
       throw new UnauthorizedError("Credenciais inválidas");
     }
-
+  
     return this.issueTokenPair(user.id, user);
   }
 
