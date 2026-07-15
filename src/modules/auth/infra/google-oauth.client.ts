@@ -1,4 +1,3 @@
-// src/modules/auth/infra/google-oauth.client.ts
 import { OAuth2Client } from 'google-auth-library'
 
 export const googleOAuthClient = new OAuth2Client(
@@ -25,8 +24,12 @@ export interface GoogleUserPayload {
 export async function getGoogleUserFromCode(code: string): Promise<GoogleUserPayload> {
   const { tokens } = await googleOAuthClient.getToken(code)
 
+  if (!tokens.id_token) {
+    throw new Error('Google não retornou um id_token válido')
+  }
+
   const ticket = await googleOAuthClient.verifyIdToken({
-    idToken: tokens.id_token!,
+    idToken: tokens.id_token,
     audience: process.env.GOOGLE_CLIENT_ID,
   })
 
