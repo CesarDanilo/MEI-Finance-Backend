@@ -4,6 +4,7 @@ import { loginSchema } from "./auth.schema";
 import { validateRequest } from "../../middlewares/validateRequest";
 import { authMiddleware } from "../../middlewares/authMiddleware";
 import { loginRateLimiter } from "../../middlewares/rateLimiter";
+import { googleCallback, redirectToGoogle } from "./controllers/google-auth.controller";
 
 const authRouter = Router();
 
@@ -23,5 +24,8 @@ authRouter.get(
   authMiddleware,
   authController.me.bind(authController)
 );
+
+authRouter.get('/auth/google', redirectToGoogle)
+authRouter.get('/auth/google/callback', googleCallback)
 
 export { authRouter };
